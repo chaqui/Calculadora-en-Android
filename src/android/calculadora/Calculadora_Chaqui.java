@@ -7,18 +7,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+
 public class Calculadora_Chaqui extends Activity implements OnClickListener  {
 
-	boolean suma;
+	boolean suma=true;
     boolean resta;
     boolean multiplicacion;
     boolean division;
+    boolean raiz;
+    boolean elevacion;
     boolean bandera=true;
     boolean otro;
     float total=0;
     String num;
     String num2;
     float totalr;
+    float base;
+    double total2;
     @Override
     
     public void onCreate(Bundle savedInstanceState) {
@@ -53,6 +58,18 @@ public class Calculadora_Chaqui extends Activity implements OnClickListener  {
         View BotonPor=findViewById(R.id.BtPor);
         //Boton /---
         View BotonDivision=findViewById(R.id.BtDivision);
+      //Boton .---
+        View BotonPunto=findViewById(R.id.BtPunto);
+      //Boton Ac---
+        View BotonAC=findViewById(R.id.BtAc);
+      //Boton C---
+        View BotonC=findViewById(R.id.BtC);
+      //Boton Pow---
+        View BotonPow=findViewById(R.id.BtPo);
+      //Boton R---
+        View BotonRaiz=findViewById(R.id.BtRaiz);
+      //Boton Igual
+        View BotonIgual=findViewById(R.id.Btigual);
         //Conexiones con los botones
         Boton0.setOnClickListener(this);
         Boton01.setOnClickListener(this);
@@ -66,8 +83,14 @@ public class Calculadora_Chaqui extends Activity implements OnClickListener  {
         Boton09.setOnClickListener(this);
         BotonMas.setOnClickListener(this);
         BotonMenos.setOnClickListener(this);
+        BotonAC.setOnClickListener(this);
+        BotonC.setOnClickListener(this);
+        BotonPunto.setOnClickListener(this);
+        BotonPow.setOnClickListener(this);
+        BotonRaiz.setOnClickListener(this);
         BotonPor.setOnClickListener(this);
         BotonDivision.setOnClickListener(this);
+        BotonIgual.setOnClickListener(this);
     }
 
     @Override
@@ -92,156 +115,122 @@ public class Calculadora_Chaqui extends Activity implements OnClickListener  {
 		}
     }
     
-	public void onClick(View v) {
+	public void onClick(View v) 
+	{
 		TextView numero = (TextView)findViewById(R.id.txtViewNumero);
+		if(v.getId()==findViewById(R.id.BtAc).getId())
+		{
+			numero.setText(" ");
+			total=0;
+			totalr=0;
+		}
+		if(v.getId()==findViewById(R.id.Btigual).getId())
+		{
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			bandera=true;
+			total=0;
+			totalr=0;
+		}
+		if(v.getId()==findViewById(R.id.BtC).getId())
+		{
+			num=numero.getText().toString();
+			int a=num.length();
+			a=a-1;
+		}
 		if(v.getId()==findViewById(R.id.Bt0).getId()){
 				cargarnumero("0");			
 		}
-		else
-		{
-			if(v.getId()==findViewById(R.id.BtUno).getId()){
+		if(v.getId()==findViewById(R.id.BtUno).getId()){
 				cargarnumero("1");
 			}	
-			else
-			{
-				if(v.getId()==findViewById(R.id.Bt2).getId()){
-					cargarnumero("2");
+		if(v.getId()==findViewById(R.id.Bt2).getId()){
+				cargarnumero("2");
 				}	
-				else
-				{
-					if(v.getId()==findViewById(R.id.Bt03).getId()){
-						cargarnumero("3");
-					}	
-					else
-					{
-						if(v.getId()==findViewById(R.id.Bt4).getId()){
-							cargarnumero("4");
-						}
-						else
-						{
-							if(v.getId()==findViewById(R.id.Bt5).getId()){
-								cargarnumero("5");
-							}	
-							else
-							{
-								if(v.getId()==findViewById(R.id.Bt6).getId()){
-									cargarnumero("6");
-								}	
-								else
-								{
-									if(v.getId()==findViewById(R.id.Bt7).getId()){
-										cargarnumero("7");
-									}
-									else
-									{
-										if(v.getId()==findViewById(R.id.Bt8).getId()){
-											cargarnumero("8");
-										}	
-										else
-										{
-											if(v.getId()==findViewById(R.id.Bt9).getId()){
-												cargarnumero("9");
-											}
-											else
-											{
-												if(v.getId()==findViewById(R.id.Bt0).getId()){
-													cargarnumero("0");
-												}	
-												else
-												{
-													if(v.getId()==findViewById(R.id.BtPunto).getId()){
-														cargarnumero(".");
-													}
-												else
-												{
-													
-													if(v.getId()==findViewById(R.id.IdMas).getId()){
-														float num12;
-														num12=Float.valueOf(numero.getText().toString());
-														totalr=operacion(num12);
-														numero.setText(String.valueOf(totalr));
-														suma=true;
-														bandera=true;
-													}
-													else
-													{
-														if(v.getId()==findViewById(R.id.BtMenis).getId()){
-															float num12;
-															num12=Float.valueOf(numero.getText().toString());
-															totalr=operacion(num12);
-															numero.setText(String.valueOf(totalr));
-															resta=true;
-															bandera=true;
-														}
-														else
-														{
-															if(v.getId()==findViewById(R.id.BtPor).getId())
-															{
-																float num12;
-																num12=Float.valueOf(numero.getText().toString());
-																totalr=operacion(num12);
-																numero.setText(String.valueOf(totalr));
-																multiplicacion=true;
-																bandera=true;
-															}
-															else
-															{
-																if(v.getId()==findViewById(R.id.BtDivision).getId())
-																{
-																	float num12;
-																	num12=Float.valueOf(numero.getText().toString());
-																	totalr=operacion(num12);
-																	numero.setText(String.valueOf(totalr));
-																	division=true;
-																	bandera=true;
-																}
-																else
-																{
-																	if(v.getId()==findViewById(R.id.Btigual).getId())
-																	{
-																		totalr=Float.valueOf(numero.getText().toString());
-																		totalr=operacion(totalr);
-																		numero.setText(String.valueOf(totalr));
-																		bandera=true;
-																		total=0;
-																		totalr=0;
-																	}
-																	else
-																	{
-																		if(v.getId()==findViewById(R.id.BtC).getId())
-																		{
-																			num=numero.getText().toString();
-																			int a=num.length();
-																			a=a-1;
-																
-																		}
-																		else
-																		{
-																			if(v.getId()==findViewById(R.id.BtAc).getId())
-																			{
-																				numero.setText(" ");
-																				total=0;
-																				totalr=0;
-																			}
-																		}
-																	}
-																}
-															}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+		if(v.getId()==findViewById(R.id.Bt03).getId())
+		{
+			cargarnumero("3");
+		}	
+					
+		if(v.getId()==findViewById(R.id.Bt4).getId()){
+			cargarnumero("4");
+		}			
+		if(v.getId()==findViewById(R.id.Bt5).getId()){
+			cargarnumero("5");
+		}			
+		if(v.getId()==findViewById(R.id.Bt6).getId()){
+			cargarnumero("6");
+		}	
+		if(v.getId()==findViewById(R.id.Bt7).getId()){
+			cargarnumero("7");
 		}
-			}
+		if(v.getId()==findViewById(R.id.Bt8).getId()){
+			cargarnumero("8");
+		}	
+		if(v.getId()==findViewById(R.id.Bt9).getId()){
+			cargarnumero("9");
+		}	
+		if(v.getId()==findViewById(R.id.BtPunto).getId()){
+			cargarnumero(".");
 		}
+		if(v.getId()==findViewById(R.id.IdMas).getId()){
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			suma=true;
+			bandera=true;
 		}
+		if(v.getId()==findViewById(R.id.BtMenis).getId()){
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			resta=true;
+			bandera=true;
+		}
+		if(v.getId()==findViewById(R.id.BtPor).getId())
+		{
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			multiplicacion=true;
+			bandera=true;
+		}
+		if(v.getId()==findViewById(R.id.BtDivision).getId())
+		{
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			division=true;
+			bandera=true;
+		}
+		if(v.getId()==findViewById(R.id.BtPo).getId())
+		{
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			elevacion=true;
+			bandera=true;
 	}
+		if(v.getId()==findViewById(R.id.BtRaiz).getId())
+		{
+			float num12;
+			num12=Float.valueOf(numero.getText().toString());
+			totalr=operacion(num12);
+			numero.setText(String.valueOf(totalr));
+			raiz=true;
+			bandera=true;
+		}
+		
+		
+}
+	
 	public float operacion(float num)
 	{
 
@@ -269,12 +258,38 @@ public class Calculadora_Chaqui extends Activity implements OnClickListener  {
 					}
 					else
 					{
-						total=num;
+						if(raiz==true)
+						{
+							double numd=Double.valueOf(num);
+							double totalq=(Math.sqrt(numd));
+							total=Double.valueOf(totalq).floatValue();
+						}
+						else
+						{
+							if(elevacion=true)
+							{
+								total=Double.valueOf(Math.pow(Float.valueOf(total).doubleValue(),Float.valueOf(num).doubleValue())).floatValue();
+							}
+							else
+							{
+								if (total==0)
+								{
+									total=num;
+								}
+							}
+						}
 					}
 				}
 			}
 		}
+		suma=false;
+		resta=false;
+		multiplicacion=false;
+		division=false;
+		raiz=false;
+		elevacion=false;
 		return total;
+		
 	}
     
 }
